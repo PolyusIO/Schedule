@@ -7,10 +7,12 @@
 
 import UIKit
 
-enum UrlBit: String {
-    case nose = "https://www.usue.ru/schedule/?action=show&startDate="
-    case middle = "&endDate="
-    case tail = "&group=%D0%9E%D0%97%D0%9C-%D0%9A%D0%98%D0%A1-22-2"
+enum Link: String {
+    case url = "https://www.usue.ru/schedule/"
+    case action = "?action="
+    case startDate = "&startDate="
+    case endDate = "&endDate="
+    case group = "&group=%D0%9E%D0%97%D0%9C-%D0%9A%D0%98%D0%A1-22-2"
 }
 
 final class ScheduleViewController: UITableViewController {
@@ -21,7 +23,12 @@ final class ScheduleViewController: UITableViewController {
     private var schedule: [DailySchedule] = []
     
     private var testUrl: String {
-        UrlBit.nose.rawValue + "21.11.2022" + UrlBit.middle.rawValue + "27.11.2022" + UrlBit.tail.rawValue
+        var url = Link.url.rawValue
+        url += Link.action.rawValue + "show"
+        url += Link.startDate.rawValue + "21.11.2022"
+        url += Link.endDate.rawValue + "27.11.2022"
+        url += Link.group.rawValue
+        return url
     }
     
     // MARK: - Override Methods
@@ -72,6 +79,10 @@ extension ScheduleViewController {
         cell.contentConfiguration = content
         return cell
     }
+}
+
+// MARK: - UITableViewDelegate
+extension ScheduleViewController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
